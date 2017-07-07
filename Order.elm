@@ -29,7 +29,9 @@ type alias Comparator a =
 
 
 {-| Take a function meant for `List.sortBy` and turn it into a Comparator.
-List.sortWith (compareBy .firstName) people
+
+    List.sortWith (compareBy .firstName) people
+
 -}
 compareBy : (a -> comparable) -> Comparator a
 compareBy fn a b =
@@ -37,7 +39,9 @@ compareBy fn a b =
 
 
 {-| Compare by multiple criteria in order. The first criterium that distinguishes two elements is used.
-List.sortWith (concat [ byLastName, byFirstName ]) people
+
+    List.sortWith (concat [ byLastName, byFirstName ]) people
+
 -}
 concat : List (Comparator a) -> Comparator a
 concat comparators a b =
@@ -55,7 +59,9 @@ concat comparators a b =
 
 
 {-| Reverse an ordering function.
-List.sortWith (reverse byLastName) people
+
+    List.sortWith (reverse byLastName) people
+
 -}
 reverse : Comparator a -> Comparator a
 reverse comparator a b =
