@@ -1,8 +1,9 @@
-module Order exposing (Comparator, compareBy, concat, max, maximum, min, minimum, reverse)
+module Compare exposing (Comparator, compareBy, concat, max, maximum, min, minimum, reverse)
 
 {-| Tools for composing comparison functions.
 
 A comparison function is the type of function you can pass to `List.sortWith`.
+You pass it two elements of a type and it returns an Order (defined in the Basics module and imported by deault).
 
 
 ## Comparator type
