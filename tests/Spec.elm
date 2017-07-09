@@ -44,13 +44,13 @@ spec =
                     numbers
                         |> List.sortWith (Compare.concat [ byEven, compare ])
                         |> Expect.equal [ 1, 3, 5, 2, 4 ]
-        , fuzz (Fuzz.list Fuzz.int) "#compareBy" <|
+        , fuzz (Fuzz.list Fuzz.int) "#by" <|
             \numbers ->
                 let
                     compareFn x =
                         x % 2
                 in
-                    List.sortWith (Compare.compareBy compareFn) numbers
+                    List.sortWith (Compare.by compareFn) numbers
                         |> Expect.equal (List.sortBy compareFn numbers)
         , fuzz (Fuzz.list Fuzz.int) "#minimum" <|
             \numbers ->

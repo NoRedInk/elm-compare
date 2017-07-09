@@ -1,4 +1,4 @@
-module Compare exposing (Comparator, compareBy, concat, max, maximum, min, minimum, reverse)
+module Compare exposing (Comparator, by, concat, max, maximum, min, minimum, reverse)
 
 {-| Tools for composing comparison functions.
 
@@ -18,7 +18,7 @@ You pass it two elements of a type and it returns an Order (defined in the Basic
 
 ## Composing compare functions
 
-@docs compareBy, concat, reverse
+@docs by, concat, reverse
 
 -}
 
@@ -31,17 +31,28 @@ type alias Comparator a =
 
 {-| Take a function meant for `List.sortBy` and turn it into a Comparator.
 
-    List.sortWith (compareBy .firstName) people
+    List.sortWith (by String.length) [ "longer", "short", "longest" ]
+    --> [ "short", "longer", "longest" ]
 
 -}
-compareBy : (a -> comparable) -> Comparator a
-compareBy fn a b =
+by : (a -> comparable) -> Comparator a
+by fn a b =
     compare (fn a) (fn b)
 
 
 {-| Compare by multiple criteria in order. The first criterium that distinguishes two elements is used.
 
-    List.sortWith (concat [ byLastName, byFirstName ]) people
+    kara : { firstName : String, lastName : String }
+    kara = { firstName = "Kara", lastName = "Thrace" }
+
+    william : { firstName : String, lastName : String }
+    william = { firstName = "William", lastName = "Adama" }
+
+    lee : { firstName : String, lastName : String }
+    lee = { firstName = "Lee", lastName = "Adama" }
+
+    List.sortWith (concat [ by .lastName, by .firstName ]) [ kara, william, lee  ]
+    --> [ lee, william, kara ]
 
 -}
 concat : List (Comparator a) -> Comparator a
@@ -61,7 +72,8 @@ concat comparators a b =
 
 {-| Reverse an ordering function.
 
-    List.sortWith (reverse byLastName) people
+    List.sortWith (by String.length |> reverse) [ "longer", "short", "longest" ]
+    --> [ "longest", "longer", "short" ]
 
 -}
 reverse : Comparator a -> Comparator a
@@ -78,6 +90,10 @@ reverse comparator a b =
 
 
 {-| Like `List.minimum` but using a custom comparator.
+
+    minimum (by String.length) [ "longer", "short", "longest" ]
+    --> Just "short"
+
 -}
 minimum : Comparator a -> List a -> Maybe a
 minimum comparator xs =
@@ -91,6 +107,10 @@ minimum comparator xs =
 
 
 {-| Like `List.maximum` but using a custom comparator.
+
+    maximum (by String.length) [ "longer", "short", "longest" ]
+    --> Just "longest"
+
 -}
 maximum : Comparator a -> List a -> Maybe a
 maximum comparator xs =
@@ -104,6 +124,10 @@ maximum comparator xs =
 
 
 {-| Like `Basics.min` but using a custom comparator.
+
+    Compare.min (by String.length) "short" "longer"
+    --> "short"
+
 -}
 min : Comparator a -> a -> a -> a
 min comparator x y =
@@ -119,6 +143,10 @@ min comparator x y =
 
 
 {-| Like `Basics.max` but using a custom comparator.
+
+    Compare.max (by String.length) "short" "longer"
+    --> "longer"
+
 -}
 max : Comparator a -> a -> a -> a
 max comparator x y =
