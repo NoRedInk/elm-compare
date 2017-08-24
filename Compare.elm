@@ -1,4 +1,4 @@
-module Compare exposing (Comparator, by, concat, max, maximum, min, minimum, reverse)
+module Compare exposing (Comparator, by, compose, concat, max, maximum, min, minimum, reverse)
 
 {-| Tools for composing comparison functions.
 
@@ -18,7 +18,7 @@ You pass it two elements of a type and it returns an Order (defined in the Basic
 
 ## Composing compare functions
 
-@docs by, concat, reverse
+@docs by, concat, reverse, compose
 
 -}
 
@@ -159,3 +159,25 @@ max comparator x y =
 
         LT ->
             y
+
+
+{-| Apply a transformation to both incoming values before attempting to apply
+the previous comparator to the results
+
+    import Compare
+    import Score exposing (Score)
+
+    type alias Player =
+        { id : Id
+        , score : Score
+        }
+
+    highestScoringPlayer : List Player -> Maybe Player
+    highestScoringPlayer players =
+        players
+            |> Compare.maximum (Compare.compose .score Score.compare)
+
+-}
+compose : (a -> b) -> Comparator b -> Comparator a
+compose fn comparator left right =
+    comparator (fn left) (fn right)
