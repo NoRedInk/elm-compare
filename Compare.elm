@@ -164,9 +164,6 @@ max comparator x y =
 {-| Apply a transformation to both incoming values before attempting to apply
 the previous comparator to the results
 
-    import Compare
-    import Score exposing (Score)
-
     type alias Player =
         { id : Id
         , score : Score
