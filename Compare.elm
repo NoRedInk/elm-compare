@@ -78,15 +78,7 @@ concat comparators a b =
 -}
 reverse : Comparator a -> Comparator a
 reverse comparator a b =
-    case comparator a b of
-        EQ ->
-            EQ
-
-        GT ->
-            LT
-
-        LT ->
-            GT
+    comparator b a
 
 
 {-| Like `List.minimum` but using a custom comparator.
