@@ -7,7 +7,8 @@
         "."
     ],
     "exposed-modules": [
-      "Compare"
+      "Compare",
+      "Compare.Dict"
     ],
     "dependencies": {
         "elm-lang/core": "5.1.1 <= v < 6.0.0"
