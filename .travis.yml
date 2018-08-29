@@ -5,9 +5,8 @@ node_js:
   - '6'
 
 install:
-  - npm install -g elm@0.18.0 elm-test elm-verify-examples
-  - elm-package install --yes
+  - npm install -g elm@0.19.0 elm-test@0.19.0-beta4 elm-verify-examples@3.0.0
 
 script:
-  - elm-verify-examples
-  - elm-test
+  - rm -fr elm-stuff/generated-code/elm-explorations/test && elm-verify-examples
+  - rm -fr elm-stuff/generated-code/elm-explorations/test && elm-test

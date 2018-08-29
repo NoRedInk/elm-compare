@@ -28,7 +28,7 @@ spec =
                         [ 5, 4, 3, 2, 1 ]
 
                     even x =
-                        x % 2 == 0
+                        modBy 2 x == 0
 
                     byEven a b =
                         case ( even a, even b ) of
@@ -48,7 +48,7 @@ spec =
             \numbers ->
                 let
                     compareFn x =
-                        x % 2
+                        modBy 2 x
                 in
                 List.sortWith (Compare.by compareFn) numbers
                     |> Expect.equal (List.sortBy compareFn numbers)
