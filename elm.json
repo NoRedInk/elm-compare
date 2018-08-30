@@ -4,7 +4,7 @@
     "name": "NoRedInk/elm-compare",
     "summary": "Tools for composing comparison functions",
     "license": "BSD-3-Clause",
-    "version": "1.1.1",
+    "version": "2.0.0",
     "exposed-modules": [
         "Compare"
     ],
